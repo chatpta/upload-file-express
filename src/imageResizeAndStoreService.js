@@ -70,7 +70,7 @@ async function handleAvtarSave( req, res, next ) {
 async function createAvtarNameAndPath( req, res, next ) {
     await createAvtarFilename( req );
     return next();
-};
+}
 
 module.exports = {
     handleAvtarSave,

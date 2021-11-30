@@ -1,4 +1,1 @@
-module.exports = {
-    sayHi: console.log("Hi this is upload manager")
-};
-
+module.exports = require('./src/avtar_controller');
