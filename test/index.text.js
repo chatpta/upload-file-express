@@ -10,10 +10,11 @@ const filePath = __dirname + '/fixture/' + fileName;
 describe( 'Upload Service Tests', function () {
 
     after( function () {
-        fs.unlink( path.resolve( 'uploads/', fileName ),
-            ( err, result ) => {
-                console.log( err );
-            } );
+        fs.unlink( path.resolve( 'uploads/', fileName ), function ( error ) {
+            if ( error ) {
+                console.error( error );
+            }
+        } );
     } );
 
     describe( 'POST / ', function () {

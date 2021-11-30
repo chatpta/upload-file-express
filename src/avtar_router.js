@@ -8,11 +8,10 @@ const express = require( 'express' );
 const router = express.Router();
 const path = require( 'path' );
 
-const multer = require( './multerFunctions' );
 const avtar_c = require( './avtar_controller' );
 const avtar_m = require( './avtar_middleware' );
 const avtar_s = require( './AvtarService' );
-const ps = require( './ParseService' );
+const parseService = require( './ParseService' );
 
 // Initiate avtar service and set upload directory
 const avtarHandlerService = new avtar_s( path.resolve( __dirname, '..', 'uploads' ) );
@@ -20,7 +19,7 @@ const avtarHandlerService = new avtar_s( path.resolve( __dirname, '..', 'uploads
 // UPLOAD AVTAR
 // Private: Upload avtar image for the user in the token
 router.post( '/',
-    ps.parseSingleFileFrom( 'avtar' ),
+    parseService.parseSingleFileFrom( 'avtar' ),
     avtar_m.handleAvtarSave( avtarHandlerService ),
     avtar_c.sendCreateResponse );
 
