@@ -13,56 +13,60 @@ const fsUnlink = util.promisify( fs.unlink );
 const imageSaveDirectory = path.resolve( __dirname, '..', 'uploads' );
 
 
-class ImageResizeAndStoreService {
+async function store( req ) {
+    const fileName = createFileName( req );
+    const filepath = createFilePath( fileName );
 
-    async store( req ) {
-
-        const fileName = ImageResizeAndStoreService.fileName( req );
-        const filepath = this.filepath( fileName );
-
-        if ( fs.existsSync( filepath ) ) {
-            await this.delete( fileName )
-        }
-
-        await sharp( req.file.buffer ).resize( 300, 300, {
-            fit: sharp.fit.inside,
-            withoutEnlargement: true
-        } )
-            .toFile( filepath );
-
-        return fileName;
+    if ( fs.existsSync( filepath ) ) {
+        await this.delete( fileName )
     }
 
-    static fileName( req ) {
-        if ( req.user && req.user.id ) {
-            return `avtar-${ req.user.id }.png`;
-        } else {
-            return req.file.originalname;
-        }
-    }
+    await sharp( req.file.buffer ).resize( 300, 300, {
+        fit: sharp.fit.inside,
+        withoutEnlargement: true
+    } )
+        .toFile( filepath );
 
-    filepath( fileName ) {
-        return path.resolve( `${ imageSaveDirectory }/${ fileName }` )
-    }
-
-    async delete( fileName ) {
-        return fsUnlink( this.filepath( fileName ) );
-    }
-
-    async createAvtarFilename( req ) {
-        req.avtarFilename = req.file.originalname;
-        req.avtarFilepath = this.filepath( req.avtarFilename );
-    }
-
-    async thumbnail( filename ) {
-        return sharp( this.filepath( filename ) )
-            .resize( 50, 50 )
-            .toBuffer();
-    }
-
+    return fileName;
 }
 
-module.exports = ImageResizeAndStoreService;
+function createFileName( req ) {
+    if ( req.user && req.user.id ) {
+        return `avtar-${ req.user.id }.png`;
+    } else {
+        return req.file.originalname;
+    }
+}
+
+function createFilePath( fileName ) {
+    return path.resolve( `${ imageSaveDirectory }/${ fileName }` )
+}
+
+function deleteFile( fileName ) {
+    return fsUnlink( createFilePath( fileName ) );
+}
+
+
+async function createAvtarFilename( req ) {
+    req.avtarFilename = req.file.originalname;
+    req.avtarFilepath = createFilePath( req.avtarFilename );
+}
+
+async function thumbnail( filename ) {
+    return sharp( createFilePath( filename ) )
+        .resize( 50, 50 )
+        .toBuffer();
+}
+
+
+module.exports = {
+    thumbnail,
+    createAvtarFilename,
+    deleteFile,
+    createFilePath,
+    createFileName,
+    store
+};
 
 
 

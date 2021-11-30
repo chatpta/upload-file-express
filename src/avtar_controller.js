@@ -4,6 +4,8 @@
  * All rights reserved Copyright (c) 2019.                                    *
  ******************************************************************************/
 
+const imageResizeAndStoreService = require( "./imageResizeAndStoreService" );
+
 
 exports.sendCreateResponse = function ( req, res ) {
     res.statusCode = 200;
@@ -17,10 +19,10 @@ exports.sendReadResponseAvtar = function ( req, res ) {
     return res.sendFile( req.avtarFilepath );
 };
 
-exports.sendReadResponseThumbnail = avtar => async function ( req, res ) {
+exports.sendReadResponseThumbnail = async function ( req, res ) {
     res.statusCode = 200;
     res.type( 'png' );
-    const tn = await avtar.thumbnail( req.avtarFilename );
+    const tn = await imageResizeAndStoreService.thumbnail( req.avtarFilename );
     return res.end( tn, 'binary' );
 };
 
