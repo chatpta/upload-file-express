@@ -11,14 +11,14 @@ const fs = require( 'fs' );
 
 const fsUnlink = util.promisify( fs.unlink );
 
-class AvtarService {
+class ImageResizeAndStoreService {
     constructor( directory ) {
         this.directory = directory;
     }
 
     async store( req ) {
 
-        const fileName = AvtarService.fileName( req );
+        const fileName = ImageResizeAndStoreService.fileName( req );
         const filepath = this.filepath( fileName );
 
         if ( fs.existsSync( filepath ) ) {
@@ -63,7 +63,7 @@ class AvtarService {
 
 }
 
-module.exports = AvtarService;
+module.exports = ImageResizeAndStoreService;
 
 
 
