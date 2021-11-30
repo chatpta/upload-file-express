@@ -13,7 +13,7 @@ const fsUnlink = util.promisify( fs.unlink );
 const imageSaveDirectory = path.resolve( __dirname, '..', 'uploads' );
 
 
-async function store( req ) {
+async function resizeAndStoreAvtar( req ) {
     const fileName = createFileName( req );
     const filepath = createFilePath( fileName );
 
@@ -58,12 +58,12 @@ async function thumbnail( filename ) {
         .toBuffer();
 }
 
-async function handleAvtarSave( req, res, next ) {
+async function handleResizeAndSaveAvtar( req, res, next ) {
     if ( !req.file ) return next();
     if ( req.file.mimetype !== 'image/png' && req.file.mimetype !== 'image/jpeg' ) {
         return next( new Error( 'File format is not supported' ) );
     }
-    req.file.storedFilename = await store( req );
+    req.file.storedFilename = await resizeAndStoreAvtar( req );
     return next()
 }
 
@@ -73,7 +73,7 @@ async function createAvtarNameAndPath( req, res, next ) {
 }
 
 module.exports = {
-    handleAvtarSave,
+    handleResizeAndSaveAvtar,
     createAvtarNameAndPath
 };
 

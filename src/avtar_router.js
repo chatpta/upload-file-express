@@ -19,7 +19,7 @@ const imageResizeAndStoreService = require( "./imageResizeAndStoreService" );
 // Private: Upload avtar image for the user in the token
 router.post( '/',
     parseService.parseSingleImageFileFromField( 'avtar' ),
-    imageResizeAndStoreService.handleAvtarSave,
+    imageResizeAndStoreService.handleResizeAndSaveAvtar,
     avtar_c.sendCreateResponse );
 
 // GET AVTAR
