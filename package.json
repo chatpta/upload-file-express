@@ -1,6 +1,6 @@
 {
   "name": "@chatpta/upload-file-express",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Express js file photo upload middleware",
   "main": "index.js",
   "scripts": {
