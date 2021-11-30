@@ -14,13 +14,13 @@ const ImageResizeAndStoreService = require( './imageResizeAndStoreService' );
 const parseService = require( './ParseService' );
 
 // Initiate avtar service and set upload directory
-const imageResizeAndStoreService = new ImageResizeAndStoreService( path.resolve( __dirname, '..', 'uploads' ) );
+const imageResizeAndStoreService = new ImageResizeAndStoreService();
 
 // UPLOAD AVTAR
 // Private: Upload avtar image for the user in the token
 router.post( '/',
     parseService.parseSingleFileFromField( 'avtar' ),
-    avtar_m.handleAvtarSave( imageResizeAndStoreService ),
+    avtar_m.handleAvtarSave(),
     avtar_c.sendCreateResponse );
 
 // GET AVTAR

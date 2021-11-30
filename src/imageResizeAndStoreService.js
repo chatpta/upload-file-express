@@ -10,11 +10,10 @@ const path = require( 'path' );
 const fs = require( 'fs' );
 
 const fsUnlink = util.promisify( fs.unlink );
+const imageSaveDirectory = path.resolve( __dirname, '..', 'uploads' );
+
 
 class ImageResizeAndStoreService {
-    constructor( directory ) {
-        this.directory = directory;
-    }
 
     async store( req ) {
 
@@ -43,7 +42,7 @@ class ImageResizeAndStoreService {
     }
 
     filepath( fileName ) {
-        return path.resolve( `${ this.directory }/${ fileName }` )
+        return path.resolve( `${ imageSaveDirectory }/${ fileName }` )
     }
 
     async delete( fileName ) {
