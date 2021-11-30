@@ -58,14 +58,23 @@ async function thumbnail( filename ) {
         .toBuffer();
 }
 
+async function handleAvtarSave( req, res, next ) {
+    if ( !req.file ) return next();
+    if ( req.file.mimetype !== 'image/png' && req.file.mimetype !== 'image/jpeg' ) {
+        return next( new Error( 'File format is not supported' ) );
+    }
+    req.file.storedFilename = await store( req );
+    return next()
+}
+
+async function createAvtarNameAndPath( req, res, next ) {
+    await createAvtarFilename( req );
+    return next();
+};
 
 module.exports = {
-    thumbnail,
-    createAvtarFilename,
-    deleteFile,
-    createFilePath,
-    createFileName,
-    store
+    handleAvtarSave,
+    createAvtarNameAndPath
 };
 
 
