@@ -22,7 +22,7 @@ class ImageResizeAndStoreService {
         const filepath = this.filepath( fileName );
 
         if ( fs.existsSync( filepath ) ) {
-            this.delete( fileName )
+            await this.delete( fileName )
         }
 
         await sharp( req.file.buffer ).resize( 300, 300, {
