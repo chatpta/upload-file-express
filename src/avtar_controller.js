@@ -5,25 +5,39 @@
  ******************************************************************************/
 
 const imageResizeAndStoreService = require( "./imageResizeAndStoreService" );
+const parseService = require( "./ParseService" );
 
 
-exports.sendCreateResponse = function ( req, res ) {
+const sendCreateResponse = function ( req, res ) {
     res.statusCode = 200;
     res.setHeader( 'Content-Type', 'application/json' );
     res.json( { message: req.file.originalname + ' is uploaded successfully' } );
 };
 
-exports.sendReadResponseAvtar = function ( req, res ) {
+const sendReadResponseAvtar = function ( req, res ) {
     res.statusCode = 200;
     res.type( 'png' );
     return res.sendFile( req.avtarFilepath );
 };
 
-exports.sendReadResponseThumbnail = async function ( req, res ) {
+const sendReadResponseThumbnail = async function ( req, res ) {
     res.statusCode = 200;
     res.type( 'png' );
     const tn = await imageResizeAndStoreService.thumbnail( req.avtarFilename );
     return res.end( tn, 'binary' );
 };
 
+// const handlePostRequestAvtar = ( req, res, next ) => {
+//     return new Promise.resolve()
+//         .then( () => {
+//             parseService.parseSingleImageFileFromField( 'avtar' )( req, res, next );
+//         } )
+//         .then();
+// };
+
+module.exports = {
+    sendCreateResponse,
+    sendReadResponseAvtar,
+    sendReadResponseThumbnail,
+};
 
