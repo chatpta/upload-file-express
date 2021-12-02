@@ -5,18 +5,18 @@
  ******************************************************************************/
 
 const express = require( 'express' );
-const router = express.Router();
+const fileRouter = express.Router();
 
 const avtarController = require( './controller' );
 
 // UPLOAD AVTAR
-router.post( '/', avtarController.handlePostRequest() );
+fileRouter.post( '/', avtarController.handlePostRequest() );
 
 // GET AVTAR
-router.get( '/', avtarController.handleGetRequest() );
+fileRouter.get( '/', avtarController.handleGetRequest() );
 
 // GET AVTAR Thumbnail
-router.get( '/tn', avtarController.handleGetThumbnailRequest() );
+fileRouter.get( '/tn', avtarController.handleGetThumbnailRequest() );
 
-module.exports = router;
+module.exports = fileRouter;
 

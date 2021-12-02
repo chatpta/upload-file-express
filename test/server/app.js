@@ -1,11 +1,9 @@
 const express = require( 'express' );
-// const uploadService = require( '../../src/UploadService' );
-const avtarRouter = require( '../../src/router' );
+const fileRouter = require( '../../src/fileRouter' );
 
 const app = express();
-// const us = new uploadService();
 
-app.post( '/', avtarRouter );
+app.use( '/', fileRouter );
 
 app.use( function ( req, res, next ) {
     res.status( 404 );
