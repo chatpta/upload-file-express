@@ -34,12 +34,9 @@ fileRouter.post( '/profile', upload.single( 'profile' ), function ( req, res ) {
 } );
 
 fileRouter.post( '/pdf', upload.single( 'cv' ), function ( req, res ) {
-    // req.file is the name of your file in the form above, here 'uploaded_file'
-    // req.body will hold the text fields, if there were any
     res.setHeader( 'Content-Type', 'application/json' );
     res.json( { message: req.file.originalname + ' is uploaded successfully' });
 } );
-
 
 
 // GET AVTAR
