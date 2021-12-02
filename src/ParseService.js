@@ -14,9 +14,10 @@ const multer = require( 'multer' );
 function parseSingleImageFileFromField( fieldNameCarryingFiles ) {
 
     const parseFromFieldMulter = multer( {
-        storage: multer.memoryStorage(),
+        //dest: '/Users/pulkitbadhwar/Desktop/work/nodeJS/upload-file-express/uploads' ,
         limits: maxAcceptableFileSizeInMB( 4 ),
         fileFilter: acceptableTypeFileTypeFilter,
+        storage: storage,
     } );
 
     return parseFromFieldMulter.single( fieldNameCarryingFiles );
@@ -31,10 +32,10 @@ function parseSingleImageFileFromField( fieldNameCarryingFiles ) {
  * @return {{fileSize: number}}
  */
 function maxAcceptableFileSizeInMB( MB ) {
-    if ( Number.isInteger( MB ) && MB >= 0 && MB <= 4 ) {
+    if ( Number.isInteger( MB ) && MB >= 0 && MB <= 5 ) {
         return { fileSize: MB * 1024 * 1024 }
     } else {
-        return { fileSize: 4 * 1024 * 1024 }
+        return { fileSize: 5 * 1024 * 1024 }
     }
 }
 
@@ -47,16 +48,23 @@ function maxAcceptableFileSizeInMB( MB ) {
 function acceptableTypeFileTypeFilter( req, file, callBackFunction ) {
     let type = file.mimetype;
     let typeArray = type.split( "/" );
-    if ( typeArray[ 0 ] === "image" &&
-        ( typeArray[ 1 ] === "png" ||
-            typeArray[ 1 ] === "jpg" ||
-            typeArray[ 1 ] === "jpeg"
+    if ( typeArray[ 0 ] === "application" &&
+        ( typeArray[ 1 ] === "pdf"
         ) ) {
         callBackFunction( null, true );
     } else {
         callBackFunction( null, false );
     }
 }
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, '/Users/pulkitbadhwar/Desktop/work/nodeJS/upload-file-express/uploads')
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname)
+    }
+})
 
 module.exports = {
     parseSingleImageFileFromField

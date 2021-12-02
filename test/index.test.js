@@ -4,7 +4,7 @@ const request = require( 'supertest' );
 const { describe, it, after } = require( 'mocha' );
 
 const app = require( './server/app' );
-const fileName = 'niagra_falls.jpg';
+const fileName = 'sample.pdf';
 const filePath = __dirname + '/fixture/' + fileName;
 
 describe( 'Upload Service Tests', function () {
@@ -18,10 +18,10 @@ describe( 'Upload Service Tests', function () {
     } );
 
     describe( 'POST / ', function () {
-        it( 'Uploads the jpg photo file', function () {
+        it( 'Uploads the pdf file', function () {
             return request( app )
                 .post( '/' )
-                .attach( 'avtar', filePath )
+                .attach( 'sample', filePath )
                 .expect( 200 )
                 .expect( 'Content-Type', /json/ )
                 .expect( `{"message":"${ fileName } is uploaded successfully"}` )
