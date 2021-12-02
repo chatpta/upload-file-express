@@ -8,6 +8,22 @@ const imageResizeAndStoreService = require( "./imageResizeAndStoreService" );
 const parseService = require( "./ParseService" );
 
 
+function handlePostRequest() {
+    return [ parseService.parseSingleImageFileFromField( 'avtar' ),
+        imageResizeAndStoreService.handleResizeAndSaveAvtar,
+        sendCreateResponse ];
+}
+
+function handleGetRequest() {
+    return [ imageResizeAndStoreService.createAvtarNameAndPath,
+        sendReadResponseAvtar ];
+}
+
+function handleGetThumbnailRequest() {
+    return [ imageResizeAndStoreService.createAvtarNameAndPath,
+        sendReadResponseThumbnail ];
+}
+
 const sendCreateResponse = function ( req, res ) {
     res.statusCode = 200;
     res.setHeader( 'Content-Type', 'application/json' );
@@ -27,17 +43,10 @@ const sendReadResponseThumbnail = async function ( req, res ) {
     return res.end( tn, 'binary' );
 };
 
-// const handlePostRequestAvtar = ( req, res, next ) => {
-//     return new Promise.resolve()
-//         .then( () => {
-//             parseService.parseSingleImageFileFromField( 'avtar' )( req, res, next );
-//         } )
-//         .then();
-// };
 
 module.exports = {
-    sendCreateResponse,
-    sendReadResponseAvtar,
-    sendReadResponseThumbnail,
+    handlePostRequest,
+    handleGetRequest,
+    handleGetThumbnailRequest
 };
 

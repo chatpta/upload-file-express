@@ -7,32 +7,16 @@
 const express = require( 'express' );
 const router = express.Router();
 
-const avtar_c = require( './avtar_controller' );
-const parseService = require( './ParseService' );
-const imageResizeAndStoreService = require( "./imageResizeAndStoreService" );
-
-
-// Initiate avtar service and set upload directory
-
+const avtarController = require( './avtar_controller' );
 
 // UPLOAD AVTAR
-// Private: Upload avtar image for the user in the token
-router.post( '/',
-    parseService.parseSingleImageFileFromField( 'avtar' ),
-    imageResizeAndStoreService.handleResizeAndSaveAvtar,
-    avtar_c.sendCreateResponse );
+router.post( '/', avtarController.handlePostRequest() );
 
 // GET AVTAR
-// Private: Read avtar image for the user in the token
-router.get( '/',
-    imageResizeAndStoreService.createAvtarNameAndPath,
-    avtar_c.sendReadResponseAvtar );
+router.get( '/', avtarController.handleGetRequest() );
 
 // GET AVTAR Thumbnail
-// Private: Read avtar image for the user in the token
-router.get( '/tn',
-    imageResizeAndStoreService.createAvtarNameAndPath,
-    avtar_c.sendReadResponseThumbnail );
+router.get( '/tn', avtarController.handleGetThumbnailRequest() );
 
 module.exports = router;
 
