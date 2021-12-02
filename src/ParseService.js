@@ -14,10 +14,9 @@ const multer = require( 'multer' );
 function parseSingleImageFileFromField( fieldNameCarryingFiles ) {
 
     const parseFromFieldMulter = multer( {
-        //dest: '/Users/pulkitbadhwar/Desktop/work/nodeJS/upload-file-express/uploads' ,
+        storage: storage,
         limits: maxAcceptableFileSizeInMB( 4 ),
         fileFilter: acceptableTypeFileTypeFilter,
-        storage: storage,
     } );
 
     return parseFromFieldMulter.single( fieldNameCarryingFiles );
