@@ -11,7 +11,7 @@ const multer = require( 'multer' );
  * @param fieldNameCarryingFiles
  * @return {*}
  */
-function parseSingleImageFileFromField( fieldNameCarryingFiles ) {
+function parseSingleImageFileToMemoryFromField( fieldNameCarryingFiles ) {
 
     const parseFromFieldMulter = multer( {
         storage: multer.memoryStorage(),
@@ -59,7 +59,7 @@ function acceptableTypeFileTypeFilter( req, file, callBackFunction ) {
 }
 
 module.exports = {
-    parseSingleImageFileFromField
+    parseSingleImageFileToMemoryFromField
 };
 
 
