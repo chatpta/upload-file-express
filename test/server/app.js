@@ -1,6 +1,6 @@
 const express = require( 'express' );
 // const uploadService = require( '../../src/UploadService' );
-const avtarRouter = require( '../../src/avtar_router' );
+const avtarRouter = require( '../../src/router' );
 
 const app = express();
 // const us = new uploadService();

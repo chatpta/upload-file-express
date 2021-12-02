@@ -1,1 +1,1 @@
-module.exports = require('./src/avtar_controller');
+module.exports = require('./src/controller');

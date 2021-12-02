@@ -7,7 +7,7 @@
 const express = require( 'express' );
 const router = express.Router();
 
-const avtarController = require( './avtar_controller' );
+const avtarController = require( './controller' );
 
 // UPLOAD AVTAR
 router.post( '/', avtarController.handlePostRequest() );
