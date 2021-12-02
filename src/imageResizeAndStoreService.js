@@ -74,7 +74,9 @@ async function createAvtarNameAndPath( req, res, next ) {
 
 module.exports = {
     handleResizeAndSaveAvtar,
-    createAvtarNameAndPath
+    createAvtarNameAndPath,
+    thumbnail,
+    deleteFile
 };
 
 
