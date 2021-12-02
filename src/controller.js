@@ -8,9 +8,9 @@ const imageResizeAndStoreService = require( "./imageResizeAndStoreService" );
 const parseService = require( "./ParseService" );
 
 
-function handlePostRequest() {
+function handlePostRequest(fieldName) {
     return [
-        parseService.parseSingleImageFileToMemoryFromField( 'avtar' ),
+        parseService.parseSingleImageFileToMemoryFromField( fieldName ),
         imageResizeAndStoreService.handleResizeAndSaveAvtar,
         _sendCreateResponse
     ];
