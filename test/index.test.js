@@ -17,16 +17,27 @@ describe( 'Upload Service Tests', function () {
         } );
     } );
 
-    describe( 'POST / ', function () {
+    describe( 'POST /photo ', function () {
         it( 'Uploads the jpg photo file', function () {
             return request( app )
-                .post( '/' )
+                .post( '/photo' )
                 .attach( 'avtar', filePath )
                 .expect( 200 )
                 .expect( 'Content-Type', /json/ )
                 .expect( `{"message":"${ fileName } is uploaded successfully"}` )
         } );
     } );
+
+    // describe( 'POST /profile ', function () {
+    //     it( 'Uploads the jpg photo file', function () {
+    //         return request( app )
+    //             .post( '/profile' )
+    //             .attach( 'profile', filePath )
+    //             .expect( 200 )
+    //             .expect( 'Content-Type', /json/ )
+    //             .expect( `{"message":"${ fileName } is uploaded successfully"}` )
+    //     } );
+    // } );
 
     describe( 'GET / ', function () {
         it( 'File not found', function () {

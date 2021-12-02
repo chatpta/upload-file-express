@@ -10,7 +10,7 @@ const fileRouter = express.Router();
 const avtarController = require( './controller' );
 
 // UPLOAD AVTAR
-fileRouter.post( '/', avtarController.handlePostRequest() );
+fileRouter.post( '/photo', avtarController.handlePostRequest() );
 
 // GET AVTAR
 fileRouter.get( '/', avtarController.handleGetRequest() );
