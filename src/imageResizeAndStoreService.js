@@ -21,8 +21,8 @@ async function resizeAndStoreAvtar( req ) {
         await this.delete( fileName )
     }
 
-    await sharp( req.file.buffer ).resize( 300, 300, {
-        fit: sharp.fit.inside,
+    await sharp( req?.file?.buffer ).resize( 300, 300, {
+        fit: sharp?.fit?.inside,
         withoutEnlargement: true
     } )
         .toFile( filepath );
@@ -31,10 +31,10 @@ async function resizeAndStoreAvtar( req ) {
 }
 
 function createFileName( req ) {
-    if ( req.user && req.user.id ) {
-        return `avtar-${ req.user.id }.png`;
+    if ( req?.user?.id ) {
+        return `avtar-${ req?.user?.id }.png`;
     } else {
-        return req.file.originalname;
+        return req?.file?.originalname;
     }
 }
 
@@ -59,8 +59,8 @@ async function thumbnail( filename ) {
 }
 
 async function handleResizeAndSaveAvtar( req, res, next ) {
-    if ( !req.file ) return next();
-    if ( req.file.mimetype !== 'image/png' && req.file.mimetype !== 'image/jpeg' ) {
+    if ( !req?.file ) return next();
+    if ( req?.file?.mimetype !== 'image/png' && req?.file?.mimetype !== 'image/jpeg' ) {
         return next( new Error( 'File format is not supported' ) );
     }
     req.file.storedFilename = await resizeAndStoreAvtar( req );
