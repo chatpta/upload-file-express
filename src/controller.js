@@ -8,7 +8,7 @@ const imageResizeAndStoreService = require( "./imageResizeAndStoreService" );
 const parseService = require( "./ParseService" );
 
 
-function handlePostRequest(fieldName) {
+function handlePostRequestSingleImageFile( fieldName) {
     return [
         parseService.parseSingleImageFileToMemoryFromField( fieldName ),
         imageResizeAndStoreService.handleResizeAndSaveAvtar,
@@ -51,7 +51,7 @@ const _sendReadResponseThumbnail = async function ( req, res ) {
 
 
 module.exports = {
-    handlePostRequest,
+    handlePostRequest: handlePostRequestSingleImageFile,
     handleGetRequest,
     handleGetThumbnailRequest
 };
