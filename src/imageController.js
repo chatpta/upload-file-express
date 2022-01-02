@@ -5,7 +5,7 @@
  ******************************************************************************/
 
 const imageResizeAndStoreService = require( "./imageResizeAndStoreService" );
-const parseService = require( "./ParseService" );
+const parseService = require( "./imageParseService" );
 
 
 function handlePostRequestSingleImageFile( fieldName) {

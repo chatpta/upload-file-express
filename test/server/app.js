@@ -1,5 +1,5 @@
 const express = require( 'express' );
-const fileRouter = require( '../../src/fileRouter' );
+const fileRouter = require( '../../src/imageRouter' );
 
 const app = express();
 

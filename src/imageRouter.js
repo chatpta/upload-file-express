@@ -7,7 +7,7 @@
 const multer = require( 'multer' )
 const path = require( 'path' );
 const express = require( 'express' );
-const fileRouter = express.Router();
+const imageRouter = express.Router();
 
 const storage = multer.diskStorage( {
     destination: function ( req, file, cb ) {
@@ -20,12 +20,12 @@ const storage = multer.diskStorage( {
 
 const upload = multer( { storage: storage } )
 
-const avtarController = require( './controller' );
+const avtarController = require( './imageController' );
 
 // UPLOAD
-fileRouter.post( '/photo', avtarController.handlePostRequest( 'avtar' ) );
+imageRouter.post( '/photo', avtarController.handlePostRequest( 'avtar' ) );
 
-fileRouter.post( '/profile', upload.single( 'profile' ), function ( req, res ) {
+imageRouter.post( '/profile', upload.single( 'profile' ), function ( req, res ) {
     // req.file is the name of your file in the form above, here 'uploaded_file'
     // req.body will hold the text fields, if there were any
     res.setHeader( 'Content-Type', 'application/json' );
@@ -33,17 +33,17 @@ fileRouter.post( '/profile', upload.single( 'profile' ), function ( req, res ) {
 
 } );
 
-fileRouter.post( '/pdf', upload.single( 'cv' ), function ( req, res ) {
+imageRouter.post( '/pdf', upload.single( 'cv' ), function ( req, res ) {
     res.setHeader( 'Content-Type', 'application/json' );
     res.json( { message: req.file.originalname + ' is uploaded successfully' });
 } );
 
 
 // GET AVTAR
-fileRouter.get( '/', avtarController.handleGetRequest() );
+imageRouter.get( '/', avtarController.handleGetRequest() );
 
 // GET AVTAR Thumbnail
-fileRouter.get( '/tn', avtarController.handleGetThumbnailRequest() );
+imageRouter.get( '/tn', avtarController.handleGetThumbnailRequest() );
 
-module.exports = fileRouter;
+module.exports = imageRouter;
 

@@ -1,1 +1,1 @@
-module.exports = require('./src/controller');
+module.exports = require('./src/imageController');
