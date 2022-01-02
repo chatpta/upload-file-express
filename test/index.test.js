@@ -21,18 +21,6 @@ describe( 'Upload Service Tests', function () {
                 console.error( error );
             }
         } );
-
-        fs.unlink( path.resolve( 'uploads/', profile ), function ( error ) {
-            if ( error ) {
-                console.error( error );
-            }
-        } );
-
-        fs.unlink( path.resolve( 'uploads/', pdf ), function ( error ) {
-            if ( error ) {
-                console.error( error );
-            }
-        } );
     } );
 
     describe( 'POST /photo ', function () {
@@ -43,28 +31,6 @@ describe( 'Upload Service Tests', function () {
                 .expect( 200 )
                 .expect( 'Content-Type', /json/ )
                 .expect( `{"message":"${ photoFile } is uploaded successfully"}` )
-        } );
-    } );
-
-    describe( 'POST /profile ', function () {
-        it( 'Uploads the jpg photo file', function () {
-            return request( app )
-                .post( '/profile' )
-                .attach( 'profile', profileFilePath )
-                .expect( 200 )
-                .expect( 'Content-Type', /json/ )
-                .expect( `{"message":"${ profile } is uploaded successfully"}` )
-        } );
-    } );
-
-    describe( 'POST /pdf ', function () {
-        it( 'Uploads the jpg photo file', function () {
-            return request( app )
-                .post( '/pdf' )
-                .attach( 'cv', pdfFilePath )
-                .expect( 200 )
-                .expect( 'Content-Type', /json/ )
-                .expect( `{"message":"${ pdf } is uploaded successfully"}` )
         } );
     } );
 
