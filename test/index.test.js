@@ -7,11 +7,6 @@ const app = require( './server/app' );
 const photoFile = 'niagra_falls.jpg';
 const photoFilePath = __dirname + '/fixture/' + photoFile;
 
-const profile = 'profile.jpg';
-const profileFilePath = __dirname + '/fixture/' + profile;
-
-const pdf = 'cv.pdf';
-const pdfFilePath = __dirname + '/fixture/' + pdf;
 
 describe( 'Upload Service Tests', function () {
 
