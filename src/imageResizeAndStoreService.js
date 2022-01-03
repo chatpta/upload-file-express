@@ -38,11 +38,15 @@ function createFileName( req ) {
     }
 }
 
+function createDirectory( dirPath ) {
+
+}
+
 function createFilePath( fileName ) {
     return path.resolve( `${ imageSaveDirectory }/${ fileName }` )
 }
 
-function deleteFile( fileName ) {
+function deleteFileSync( fileName ) {
     return fsUnlink( createFilePath( fileName ) );
 }
 
@@ -52,13 +56,13 @@ async function createAvtarFilename( req ) {
     req.avtarFilepath = createFilePath( req.avtarFilename );
 }
 
-async function thumbnail( filename ) {
+async function thumbnailPromise( filename ) {
     return sharp( createFilePath( filename ) )
         .resize( 50, 50 )
         .toBuffer();
 }
 
-async function handleResizeAndSaveAvtar( req, res, next ) {
+async function handleResizeAndSaveAvtarMiddleware( req, res, next ) {
     if ( !req?.file ) return next();
     if ( req?.file?.mimetype !== 'image/png' && req?.file?.mimetype !== 'image/jpeg' ) {
         return next( new Error( 'File format is not supported' ) );
@@ -67,16 +71,17 @@ async function handleResizeAndSaveAvtar( req, res, next ) {
     return next()
 }
 
-async function createAvtarNameAndPath( req, res, next ) {
+async function createAvtarNameAndPathMiddleware( req, res, next ) {
     await createAvtarFilename( req );
     return next();
 }
 
 module.exports = {
-    handleResizeAndSaveAvtar,
-    createAvtarNameAndPath,
-    thumbnail,
-    deleteFile
+    createDirectory,
+    handleResizeAndSaveAvtarMiddleware,
+    createAvtarNameAndPathMiddleware,
+    thumbnailPromise,
+    deleteFileSync
 };
 
 

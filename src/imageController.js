@@ -11,21 +11,21 @@ const parseService = require( "./imageParseService" );
 function handlePostRequestSingleImageFile( fieldName) {
     return [
         parseService.parseSingleImageFileToMemoryFromField( fieldName ),
-        imageResizeAndStoreService.handleResizeAndSaveAvtar,
+        imageResizeAndStoreService.handleResizeAndSaveAvtarMiddleware,
         _sendCreateResponse
     ];
 }
 
 function handleGetRequest() {
     return [
-        imageResizeAndStoreService.createAvtarNameAndPath,
+        imageResizeAndStoreService.createAvtarNameAndPathMiddleware,
         _sendReadResponseAvtar
     ];
 }
 
 function handleGetThumbnailRequest() {
     return [
-        imageResizeAndStoreService.createAvtarNameAndPath,
+        imageResizeAndStoreService.createAvtarNameAndPathMiddleware,
         _sendReadResponseThumbnail
     ];
 }
@@ -45,7 +45,7 @@ const _sendReadResponseAvtar = function ( req, res ) {
 
 const _sendReadResponseThumbnail = async function ( req, res ) {
     res.type( 'png' );
-    const tn = await imageResizeAndStoreService.thumbnail( req.avtarFilename );
+    const tn = await imageResizeAndStoreService.thumbnailPromise( req.avtarFilename );
     return res.end( tn, 'binary' );
 };
 
