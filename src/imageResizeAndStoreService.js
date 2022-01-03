@@ -39,7 +39,7 @@ function createFileName( req ) {
     }
 }
 
-async function createDirectoryIfNotExistRecursivePromise( req ) {
+function createDirectoryIfNotExistRecursivePromise( req ) {
     const userId = req?.jwt?.payload?.client_id
     if ( userId ) {
 
@@ -47,7 +47,7 @@ async function createDirectoryIfNotExistRecursivePromise( req ) {
         const userDirNameAbsolutePath = getUserDirectoryPath( userDirName );
 
         if ( !fs.existsSync( userDirNameAbsolutePath ) ) {
-            return await fsPromises.mkdir( userDirNameAbsolutePath, {
+            return fsPromises.mkdir( userDirNameAbsolutePath, {
                 recursive: true,
                 mode: 0o777
             } );
