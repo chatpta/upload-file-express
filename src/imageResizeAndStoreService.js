@@ -45,6 +45,7 @@ function createDirectoryIfNotExistRecursiveMiddleware( req, res, next ) {
 
         const userDirName = removeDashAndCapitalize( userId );
         const userDirNameAbsolutePath = getUserDirectoryPath( userDirName );
+        req.userDirNameAbsolutePath = userDirNameAbsolutePath;
 
         if ( !fs.existsSync( userDirNameAbsolutePath ) ) {
             fsPromises.mkdir( userDirNameAbsolutePath, {

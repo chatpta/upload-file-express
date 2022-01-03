@@ -1,9 +1,17 @@
-const { describe, it } = require( "mocha" );
+const { describe, it, after } = require( "mocha" );
 const assert = require( "assert" );
 const { createDirectoryIfNotExistRecursiveMiddleware } = require( "../src/imageResizeAndStoreService" );
+const fs = require( "fs" );
 
 
 describe( "Create directory test", function () {
+
+
+    after( 'Remove directory', () => {
+        fs.rmdir( '/Users/peterpris/chatpta/upload-file-express/uploads/8B0DB877A6B34A23A493E687915CDD87',
+            function () {
+            } );
+    } );
 
     it( "createDirectory", function () {
 
@@ -21,13 +29,14 @@ describe( "Create directory test", function () {
 
         const res = {};
 
-        function next() {
+        function next( arg ) {
         }
 
         // Act
         createDirectoryIfNotExistRecursiveMiddleware( req, res, next );
 
         // Assert
-        assert.deepStrictEqual( true, true );
+        assert.deepStrictEqual( req.userDirNameAbsolutePath,
+            '/Users/peterpris/chatpta/upload-file-express/uploads/8B0DB877A6B34A23A493E687915CDD87' );
     } );
 } );
