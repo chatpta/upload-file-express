@@ -8,6 +8,7 @@ const sharp = require( 'sharp' );
 const util = require( 'util' );
 const path = require( 'path' );
 const fs = require( 'fs' );
+const fsPromises = require( 'fs/promises' )
 
 const fsUnlink = util.promisify( fs.unlink );
 const imageSaveDirectory = path.resolve( __dirname, '..', 'uploads' );
@@ -38,7 +39,36 @@ function createFileName( req ) {
     }
 }
 
-function createDirectory( dirPath ) {
+async function createDirectoryIfNotExistRecursivePromise( req ) {
+    const userId = req?.jwt?.payload?.client_id
+    if ( userId ) {
+
+        const userDirName = removeDashAndCapitalize( userId );
+        const userDirNameAbsolutePath = getUserDirectoryPath( userDirName );
+
+        if ( !fs.existsSync( userDirNameAbsolutePath ) ) {
+            return await fsPromises.mkdir( userDirNameAbsolutePath, {
+                recursive: true,
+                mode: 0o777
+            } );
+        } else {
+            return new Promise( function ( resolve, reject ) {
+                resolve( undefined );
+                reject( undefined );
+            } );
+        }
+    }
+}
+
+function getUserDirectoryPath( userDirName ) {
+
+    return path.resolve( `${ imageSaveDirectory }/${ userDirName }` )
+
+}
+
+function removeDashAndCapitalize( id ) {
+
+    return id.replace( /-/g, '' ).toUpperCase();
 
 }
 
@@ -77,7 +107,7 @@ async function createAvtarNameAndPathMiddleware( req, res, next ) {
 }
 
 module.exports = {
-    createDirectory,
+    createDirectoryIfNotExistRecursivePromise,
     handleResizeAndSaveAvtarMiddleware,
     createAvtarNameAndPathMiddleware,
     thumbnailPromise,

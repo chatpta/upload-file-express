@@ -1,6 +1,6 @@
 const { describe, it } = require( "mocha" );
 const assert = require( "assert" );
-const { createDirectory } = require( "../src/imageResizeAndStoreService" );
+const { createDirectoryIfNotExistRecursivePromise } = require( "../src/imageResizeAndStoreService" );
 
 
 describe( "Create directory test", function () {
@@ -20,7 +20,7 @@ describe( "Create directory test", function () {
         };
 
         // Act
-        await createDirectory( req );
+        await createDirectoryIfNotExistRecursivePromise( req );
 
         // Assert
         assert.deepStrictEqual( true, true );
