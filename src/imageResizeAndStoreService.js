@@ -39,7 +39,7 @@ function createFileName( req ) {
     }
 }
 
-function createDirectoryIfNotExistRecursivePromise( req ) {
+function createDirectoryIfNotExistRecursiveMiddleware( req, res, next ) {
     const userId = req?.jwt?.payload?.client_id
     if ( userId ) {
 
@@ -47,15 +47,14 @@ function createDirectoryIfNotExistRecursivePromise( req ) {
         const userDirNameAbsolutePath = getUserDirectoryPath( userDirName );
 
         if ( !fs.existsSync( userDirNameAbsolutePath ) ) {
-            return fsPromises.mkdir( userDirNameAbsolutePath, {
+            fsPromises.mkdir( userDirNameAbsolutePath, {
                 recursive: true,
                 mode: 0o777
-            } );
+            } )
+                .then( next )
+                .catch( next );
         } else {
-            return new Promise( function ( resolve, reject ) {
-                resolve( undefined );
-                reject( undefined );
-            } );
+            next();
         }
     }
 }
@@ -107,7 +106,7 @@ async function createAvtarNameAndPathMiddleware( req, res, next ) {
 }
 
 module.exports = {
-    createDirectoryIfNotExistRecursivePromise,
+    createDirectoryIfNotExistRecursiveMiddleware,
     handleResizeAndSaveAvtarMiddleware,
     createAvtarNameAndPathMiddleware,
     thumbnailPromise,

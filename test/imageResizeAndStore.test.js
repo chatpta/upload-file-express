@@ -1,11 +1,11 @@
 const { describe, it } = require( "mocha" );
 const assert = require( "assert" );
-const { createDirectoryIfNotExistRecursivePromise } = require( "../src/imageResizeAndStoreService" );
+const { createDirectoryIfNotExistRecursiveMiddleware } = require( "../src/imageResizeAndStoreService" );
 
 
 describe( "Create directory test", function () {
 
-    it( "createDirectory", async function () {
+    it( "createDirectory", function () {
 
         // Arrange
         const req = {
@@ -19,8 +19,13 @@ describe( "Create directory test", function () {
             }
         };
 
+        const res = {};
+
+        function next() {
+        }
+
         // Act
-        await createDirectoryIfNotExistRecursivePromise( req );
+        createDirectoryIfNotExistRecursiveMiddleware( req, res, next );
 
         // Assert
         assert.deepStrictEqual( true, true );
